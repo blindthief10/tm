@@ -7,31 +7,74 @@
           <h3 class="lead display-3 text-center my-5" v-text="finalScore"></h3>
           <div class="d-flex flex-row justify-content-around">
 
-            <div class="card d-flex flex-column justify-content-between">
-              <div class="card-header bg-light">
-                <h4 class="title text-center" v-text="homeTeam"></h4>
+            <div class="card d-flex flex-column justify-content-around w-25">
+
+              <div class="card-header bg-light text-dark">
+                <h4 class="title text-center">{{homeTeam}} starting lineup</h4>
+              </div>
+
+              <div class="card-body">
                 <ul class="list-group my-4">
-                  <li class="list-group-item text-dark" v-for="homePlayer in selectedMatchInfo.lineups.home.start">
-                    {{homePlayer.shirt}}. {{homePlayer.name}}
+                  <li class="list-group-item text-dark" v-for="homeStarter in selectedMatchInfo.lineups.home.start">
+                    {{homeStarter.shirt}}. {{homeStarter.name}}
                   </li>
                 </ul>
               </div>
-            </div>
-            <div class="card d-flex flex-column justify-content-between">
-              <div class="card-header bg-dark text-white">
-                <h4 class="title text-center" v-text="awayTeam"></h4>
+
+
+              <div class="card-header bg-light text-dark">
+                <h4 class="title text-center">{{homeTeam}} substitutions</h4>
+              </div>
+
+              <div class="card-body">
                 <ul class="list-group my-4">
-                  <li class="list-group-item text-dark" v-for="awayPlayer in selectedMatchInfo.lineups.away.start">
-                    {{awayPlayer.shirt}}. {{awayPlayer.name}}
+                  <li class="list-group-item text-dark" v-for="homeSub in selectedMatchInfo.lineups.home.subs">
+                    {{homeSub.shirt}}. {{homeSub.name}}
                   </li>
                 </ul>
               </div>
+
             </div>
 
+
+
+
+            <div class="card d-flex flex-column justify-content-around w-25">
+
+              <div class="card-header bg-dark text-white">
+                <h4 class="title text-center">{{awayTeam}} starting lineup</h4>
+              </div>
+
+              <div class="card-body">
+                <ul class="list-group my-4">
+                  <li class="list-group-item text-dark" v-for="awayStarter in selectedMatchInfo.lineups.away.start">
+                    {{awayStarter.shirt}}. {{awayStarter.name}}
+                  </li>
+                </ul>
+              </div>
+
+
+              <div class="card-header bg-dark text-white">
+                <h4 class="title text-center">{{awayTeam}} substitutions</h4>
+              </div>
+
+              <div class="card-body">
+                <ul class="list-group my-4">
+                  <li class="list-group-item text-dark" v-for="awaySub in selectedMatchInfo.lineups.away.subs">
+                    {{awaySub.shirt}}. {{awaySub.name}}
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+
+
+
+            </div>
+            <p class="lead" v-text="attendance"></p>
           </div>
-          <p class="lead" v-text="attendance"></p>
         </div>
-    </div>
+
 
 </template>
 
@@ -59,10 +102,10 @@
         return `Attendance: ${this.selectedMatchInfo.attendance}`;
       },
       homeTeam() {
-        return `${this.selectedMatchInfo.hometeam}\'s starting lineup`;
+        return this.selectedMatchInfo.hometeam;
       },
       awayTeam() {
-        return `${this.selectedMatchInfo.awayteam}\'s starting lineup`;
+        return this.selectedMatchInfo.awayteam;
       }
     },
     created() {

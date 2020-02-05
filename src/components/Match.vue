@@ -1,5 +1,5 @@
 <template>
-  <div class="card my-5">
+  <div class="card my-5 rounded">
     <div class="header bg-info">
       <p class="lead mt-2 text-white">{{competitionInfo}}</p>
     </div>
