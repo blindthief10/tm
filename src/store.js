@@ -13,7 +13,21 @@ export default new Vuex.Store({
   getters: {
     getAllServices: state => state.allServices,
     getAllMatches: state => state.allMatches,
-    selectedMatch: state => state.selectedMatch
+    selectedMatch: state => state.selectedMatch,
+    getMatchGoals: state => {
+      const allGoalsTogether = state.selectedMatch.goals.home.concat(state.selectedMatch.goals.away);
+      return allGoalsTogether.sort((a, b) => a.minute < b.minute);
+    },
+    playersOut: state => {
+      const homeOut = state.selectedMatch.subs.home.map(sub => sub.offname);
+      const awayOut = state.selectedMatch.subs.away.map(sub => sub.offname);
+      return homeOut.concat(awayOut);
+    },
+    playersIn: state => {
+      const homeIn =  state.selectedMatch.subs.home.map(sub => sub.onname);
+      const awayIn = state.selectedMatch.subs.away.map(sub => sub.onname);
+      return homeIn.concat(awayIn);
+    }
   },
   mutations: {
     fillServices: (state, allServices) => {

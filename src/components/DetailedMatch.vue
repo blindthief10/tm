@@ -15,8 +15,10 @@
 
               <div class="card-body">
                 <ul class="list-group my-4">
-                  <li class="list-group-item text-dark" v-for="homeStarter in selectedMatchInfo.lineups.home.start">
+                  <li class="list-group-item text-dark" v-for="homeStarter in selectedMatchInfo.lineups.home.start"
+                      :class="{'bg-danger': playersOut.includes(homeStarter.name)}">
                     {{homeStarter.shirt}}. {{homeStarter.name}}
+                    <span v-if="playersOut.includes(homeStarter.name)" style="float: right">Out</span>
                   </li>
                 </ul>
               </div>
@@ -28,8 +30,10 @@
 
               <div class="card-body">
                 <ul class="list-group my-4">
-                  <li class="list-group-item text-dark" v-for="homeSub in selectedMatchInfo.lineups.home.subs">
+                  <li class="list-group-item text-dark" v-for="homeSub in selectedMatchInfo.lineups.home.subs"
+                  :class="{'bg-success': playersIn.includes(homeSub.name)}">
                     {{homeSub.shirt}}. {{homeSub.name}}
+                    <span v-if="playersIn.includes(homeSub.name)" style="float: right">In</span>
                   </li>
                 </ul>
               </div>
@@ -47,8 +51,10 @@
 
               <div class="card-body">
                 <ul class="list-group my-4">
-                  <li class="list-group-item text-dark" v-for="awayStarter in selectedMatchInfo.lineups.away.start">
+                  <li class="list-group-item text-dark" v-for="awayStarter in selectedMatchInfo.lineups.away.start"
+                    :class="{'bg-danger': playersOut.includes(awayStarter.name)}">
                     {{awayStarter.shirt}}. {{awayStarter.name}}
+                    <span v-if="playersOut.includes(awayStarter.name)" style="float: right">Out</span>
                   </li>
                 </ul>
               </div>
@@ -60,18 +66,35 @@
 
               <div class="card-body">
                 <ul class="list-group my-4">
-                  <li class="list-group-item text-dark" v-for="awaySub in selectedMatchInfo.lineups.away.subs">
+                  <li class="list-group-item text-dark" v-for="awaySub in selectedMatchInfo.lineups.away.subs"
+                  :class="{'bg-success': playersIn.includes(awaySub.name)}">
                     {{awaySub.shirt}}. {{awaySub.name}}
+                    <span v-if="playersIn.includes(awaySub.name)" style="float: right">In</span>
                   </li>
                 </ul>
               </div>
 
             </div>
 
+          </div>
 
 
+          <div class="card my-4">
+            <div class="card-header bg-dark text-white">
+              <h4 class="title">Goals Scored</h4>
             </div>
-            <p class="lead" v-text="attendance"></p>
+            <div class="card-body">
+              <ul class="list-group my-4">
+                <li class="list-group-item" v-for="goal in goals">
+                  {{goal.minute}}'  {{goal.scorername}}
+                  <span class="font-weight-bold" style="float: right">{{goal.scorehome}} - {{goal.scoreaway}}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <p class="lead" v-html="attendance"></p>
+
           </div>
         </div>
 
@@ -99,13 +122,22 @@
         return `Final score: ${this.selectedMatchInfo.scores.total.home} - ${this.selectedMatchInfo.scores.total.away}`;
       },
       attendance() {
-        return `Attendance: ${this.selectedMatchInfo.attendance}`;
+        return `Attendance: <strong>${this.selectedMatchInfo.attendance}</strong> people`;
       },
       homeTeam() {
         return this.selectedMatchInfo.hometeam;
       },
       awayTeam() {
         return this.selectedMatchInfo.awayteam;
+      },
+      goals() {
+        return this.$store.getters.getMatchGoals;
+      },
+      playersOut() {
+        return this.$store.getters.playersOut;
+      },
+      playersIn() {
+        return this.$store.getters.playersIn;
       }
     },
     created() {
