@@ -7,11 +7,13 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     allServices: [],
-    allMatches: []
+    allMatches: [],
+    selectedMatch: {}
   },
   getters: {
     getAllServices: state => state.allServices,
-    getAllMatches: state => state.allMatches
+    getAllMatches: state => state.allMatches,
+    selectedMatch: state => state.selectedMatch
   },
   mutations: {
     fillServices: (state, allServices) => {
@@ -19,6 +21,9 @@ export default new Vuex.Store({
     },
     fillMatches: (state, allMatches) => {
       state.allMatches = allMatches;
+    },
+    showGivenMatch: (state, selectedMatch) => {
+      state.selectedMatch = selectedMatch;
     }
   },
   actions: {
@@ -32,6 +37,12 @@ export default new Vuex.Store({
       axios.get('http://localhost:3000/matches')
       .then(response => {
         commit('fillMatches', response.data)
+      })
+    },
+    fetchGivenMatch({commit}, id) {
+      axios.get('http://localhost:3000/match', {params: {matchId: id}})
+      .then(response => {
+        commit('showGivenMatch', response.data[0]);
       })
     }
   }

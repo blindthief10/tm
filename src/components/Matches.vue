@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <Match v-for="(matchInfo, index) in matchesInfos" :key="index" :data="matchInfo"></Match>
+    <h3 class="title display-4 text-center">These are all {{matchesInfos.length}} matches so far</h3>
+    <Match v-for="(matchInfo, index) in matchesInfos" :key="index" :match-data="matchInfo"></Match>
   </div>
 </template>
 
@@ -12,9 +13,6 @@
       matchesInfos() {
         return this.$store.getters.getAllMatches;
       }
-    },
-    mounted() {
-      console.log(this.matchesInfo);
     }
   }
 </script>
