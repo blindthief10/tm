@@ -4,7 +4,7 @@
       <p class="lead mt-2 text-white">{{competitionInfo}}</p>
     </div>
     <div class="card-body">
-      <p class="card-text display-4">{{matchData.description}}</p>
+      <p class="card-text display-4 text-center">{{matchData.description}}</p>
     </div>
     <div class="card-footer bg-dark text-white d-flex justify-content-around align-items-center">
       <p class="lead">{{beginsAt}}</p>
