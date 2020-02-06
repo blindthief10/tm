@@ -13,11 +13,6 @@ import Navbar from './components/Navbar.vue'
 export default {
   name: 'app',
   components: {Navbar, Services},
-  data () {
-    return {
-
-    }
-  },
   created() {
     this.$store.dispatch('fetchServices');
     this.$store.dispatch('fetchMatches');
